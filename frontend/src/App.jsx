@@ -18,29 +18,30 @@ function App() {
       });
   }, []);
 
-  // const addEntry= ()=>{
-  //   fetch("http://localhost:3001/api/entries", {
-  //     method: "POST",
-  //     body: JSON.stringify({ firstname, lastname, mail, message }),
-  //     headers: { "Content-Type": "application/json" },
-  //   })
-  //     .then((res) => res.json())
-  //     .then(({ success, result, error }) => {
-  //       if (!success) console.log(error); 
-  //       else setEntries(result);
-  //     });
-  // }
+  const addEntry= ()=>{
+    fetch("http://localhost:3001/api/entries", {
+      method: "POST",
+      body: JSON.stringify({ firstname, lastname, mail, message }),
+      headers: { "Content-Type": "application/json" },
+    })
+      .then((res) => res.json())
+      .then(({ success, result, error }) => {
+        if (!success) console.log(error); 
+        else setEntries(result);
+      });
+  }
 
-  // const deleteEntry= (entry)=>{
-  //   fetch(`http://localhost:3001/api/entries/${entry.id}`, {
-  //     method: "DELETE",
-  //   })
-  //     .then((res) => res.json())
-  //     .then(({ success, result, error }) => {
-  //       if (!success) console.log(error); 
-  //       else setEntries(result);
-  //     });
-  // }
+  const deleteEntry= (entry)=>{
+    console.log(entry);
+    fetch(`http://localhost:3001/api/entries/${entry.id}`, {
+      method: "DELETE",
+    })
+      .then((res) => res.json())
+      .then(({ success, result, error }) => {
+        if (!success) console.log(error); 
+        else setEntries(result);
+      });
+  }
   console.log(entries);
 
   return (
@@ -50,13 +51,13 @@ function App() {
       <input type="text" placeholder='last name'onChange={(e)=>setLastName(e.target.value)} value={lastname}/>
       <input type="text" placeholder='email'onChange={(e)=>setMail(e.target.value)} value={mail}/>
       <input type="message" placeholder='message' onChange={(e)=>setMessage(e.target.value)} value={message}/>
-      <button >Add Entry</button>
+      <button onClick={addEntry}>Add Entry</button>
       </div>
       <div>
       {entries?.map((entry,index)=><Card
       key={index}
       entry={entry}
-      // deleteEntry={deleteEntry(entry)}
+      deleteEntry={()=>deleteEntry(entry)}
 
       />)}
       </div>

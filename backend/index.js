@@ -40,7 +40,7 @@ app.post('/api/entries', (req,res)=>{
 })
 
 app.delete('/api/entries/:entryId',(req,res)=>{
-    const id = req.params.id
+    const id = req.params.entryId
     readJsonFile('./entries.json')
     .then((entries)=>{
         const entriesWithoutDeleted=entries.filter((entry)=> entry.id.toString()!== id)
